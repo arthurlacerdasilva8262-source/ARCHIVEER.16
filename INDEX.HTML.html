@@ -1,0 +1,354 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body-host { display: block; }
+
+  #romantic-root {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 25%, #fde8f0 50%, #ffb3c6 75%, #fce4ec 100%);
+    background-size: 300% 300%;
+    animation: bgShift 10s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    font-family: 'Lato', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  canvas#hcanvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    max-width: 580px;
+    width: 100%;
+    background: rgba(255,255,255,0.80);
+    border: 1px solid rgba(255,182,205,0.6);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    box-shadow: 0 12px 40px rgba(220,60,100,0.15);
+    animation: cardIn 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(28px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .ornament { color: #f4a9bb; font-size: 13px; letter-spacing: 8px; margin-bottom: 1rem; }
+
+  .title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+    color: #b5304e;
+    line-height: 1.15;
+    margin-bottom: 0.4rem;
+  }
+
+  .heart-beat {
+    display: inline-block;
+    animation: hb 1.4s ease-in-out infinite;
+  }
+  @keyframes hb {
+    0%,100%{transform:scale(1)}
+    14%{transform:scale(1.3)}
+    28%{transform:scale(1)}
+    42%{transform:scale(1.2)}
+  }
+
+  .phrase {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: #d4607a;
+    margin-bottom: 1.2rem;
+  }
+
+  .intro {
+    font-size: clamp(0.83rem, 2.2vw, 0.95rem);
+    color: #7a3048;
+    line-height: 1.8;
+    max-width: 460px;
+    margin: 0 auto 1.4rem;
+  }
+
+  .divider { color: #f4a9bb; letter-spacing: 6px; font-size: 11px; margin-bottom: 1.4rem; }
+
+  .reasons-box {
+    background: rgba(255,225,235,0.55);
+    border: 1px solid rgba(244,169,187,0.45);
+    border-radius: 16px;
+    padding: 1.2rem 1.4rem;
+    text-align: left;
+    margin-bottom: 1.6rem;
+  }
+
+  .reasons-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+    color: #b5304e;
+    text-align: center;
+    margin-bottom: 0.9rem;
+  }
+
+  .reasons-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+  .reasons-list li {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    color: #6b2c40; line-height: 1.5;
+    padding: 0.4rem 0.5rem; border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .reasons-list li:hover { background: rgba(255,255,255,0.65); }
+  .icon { flex-shrink: 0; font-size: 15px; }
+
+  .question {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    color: #b5304e;
+    margin-bottom: 1.6rem;
+    line-height: 1.45;
+  }
+
+  .btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; position: relative; }
+
+  .btn-yes {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem; font-weight: 400;
+    background: linear-gradient(135deg, #e8637a, #b5304e);
+    color: #fff;
+    border: none; border-radius: 50px;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(181,48,78,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-yes:hover { transform: translateY(-3px) scale(1.06); box-shadow: 0 8px 22px rgba(181,48,78,0.45); }
+  .btn-yes:active { transform: scale(0.97); }
+
+  .btn-no {
+    font-family: 'Lato', sans-serif;
+    font-size: 1rem; font-weight: 400;
+    background: rgba(255,255,255,0.7);
+    color: #a06070;
+    border: 1.5px solid #f4a9bb;
+    border-radius: 50px;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, transform 0.18s ease;
+    user-select: none;
+  }
+  .btn-no:hover { border-color: #e8637a; color: #b5304e; }
+
+  .success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    margin-top: 1.4rem;
+    padding: 1.4rem;
+    background: rgba(255,225,235,0.75);
+    border: 1px solid #f4a9bb;
+    border-radius: 16px;
+    animation: fadeUp 0.5s ease;
+  }
+  @keyframes fadeUp { from{opacity:0;transform:scale(0.92)} to{opacity:1;transform:scale(1)} }
+
+  .success-emoji { font-size: 2.6rem; animation: hb 1.2s ease-in-out infinite; }
+  .success-text { font-size: clamp(0.88rem, 2.2vw, 1rem); color: #7a3048; line-height: 1.75; }
+  .success-text strong { color: #b5304e; font-weight: 700; }
+
+  @media(max-width:420px){
+    .card{padding:2rem 1.2rem;}
+    .reasons-box{padding:1rem;}
+  }
+</style>
+
+<div id="romantic-root">
+  <canvas id="hcanvas"></canvas>
+
+  <div class="card">
+    <div class="ornament">✦ ✦ ✦</div>
+
+    <h1 class="title">Oi, Gabby <span class="heart-beat">❤️</span></h1>
+
+    <p class="phrase">"Eu te amo, daqui ao infinito"</p>
+
+    <p class="intro">
+      Eu poderia escrever poemas, encher o céu de estrelas com o seu nome ou
+      viajar até o fim do mundo para te dizer isso — mas prefiro chegar pertinho
+      de você, olhar nos seus olhos e simplesmente perguntar…
+    </p>
+
+    <div class="divider">✦ ✦ ✦</div>
+
+    <div class="reasons-box">
+      <h2 class="reasons-title">Por que você deveria namorar comigo?</h2>
+      <ul class="reasons-list">
+        <li><span class="icon">🌙</span><span>Porque eu penso em você quando o dia começa e quando a noite cai</span></li>
+        <li><span class="icon">🎶</span><span>Porque toda música boa me lembra de você</span></li>
+        <li><span class="icon">🌸</span><span>Porque do seu lado até os momentos simples ficam especiais</span></li>
+        <li><span class="icon">🛡️</span><span>Porque vou cuidar de você com toda a atenção que você merece</span></li>
+        <li><span class="icon">😂</span><span>Porque prometo fazer você rir todos os dias (mesmo com piadas ruins)</span></li>
+        <li><span class="icon">♾️</span><span>Porque o meu "daqui ao infinito" é só pra você</span></li>
+      </ul>
+    </div>
+
+    <p class="question">Então, Gabby… você quer namorar comigo? 💌</p>
+
+    <div class="btns" id="btns">
+      <button class="btn-yes" id="btnYes">Sim 💖</button>
+      <button class="btn-no" id="btnNo">Não 😢</button>
+    </div>
+
+    <div class="success" id="successMsg">
+      <span class="success-emoji">🥰</span>
+      <p class="success-text">
+        Eu sabia que você ia dizer sim!<br>
+        <strong>Hoje começa a nossa história mais bonita.</strong><br>
+        Eu te amo, Gabby — daqui ao infinito. ❤️
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const canvas = document.getElementById('hcanvas');
+  const ctx = canvas.getContext('2d');
+  const root = document.getElementById('romantic-root');
+
+  function resize(){
+    canvas.width = root.offsetWidth;
+    canvas.height = root.offsetHeight;
+  }
+  resize();
+  new ResizeObserver(resize).observe(root);
+
+  function Heart(){
+    this.reset(true);
+  }
+  Heart.prototype.reset = function(init){
+    this.x = Math.random() * canvas.width;
+    this.y = init ? Math.random() * canvas.height : canvas.height + 20;
+    this.s = Math.random() * 14 + 6;
+    this.sp = Math.random() * 0.7 + 0.3;
+    this.op = Math.random() * 0.4 + 0.08;
+    this.dr = (Math.random()-0.5)*0.5;
+    this.wb = Math.random()*Math.PI*2;
+  };
+  Heart.prototype.draw = function(){
+    ctx.save();
+    ctx.globalAlpha = this.op;
+    ctx.translate(this.x, this.y);
+    const s = this.s;
+    ctx.beginPath();
+    ctx.moveTo(0, s*0.3);
+    ctx.bezierCurveTo(-s,-s*0.3,-s*1.4,s*0.6,0,s*1.2);
+    ctx.bezierCurveTo(s*1.4,s*0.6,s,-s*0.3,0,s*0.3);
+    ctx.fillStyle = Math.random()>0.5?'#e8637a':'#f4a9bb';
+    ctx.fill();
+    ctx.restore();
+  };
+  Heart.prototype.update = function(){
+    this.wb += 0.025;
+    this.x += Math.sin(this.wb)*this.dr;
+    this.y -= this.sp;
+    if(this.y < -30) this.reset();
+  };
+
+  const hearts = Array.from({length:22},()=>new Heart());
+  function loop(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    hearts.forEach(h=>{h.update();h.draw();});
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  const btnNo = document.getElementById('btnNo');
+  const btnYes = document.getElementById('btnYes');
+  const btns = document.getElementById('btns');
+  const successMsg = document.getElementById('successMsg');
+
+  function flee(){
+    const card = document.querySelector('.card');
+    const cr = card.getBoundingClientRect();
+    const br = btnNo.getBoundingClientRect();
+    const maxX = cr.width - br.width - 10;
+    const maxY = cr.height - br.height - 10;
+    let nx = Math.random()*maxX;
+    let ny = Math.random()*maxY;
+    btnNo.style.position = 'absolute';
+    btnNo.style.left = nx+'px';
+    btnNo.style.top  = ny+'px';
+    btnNo.style.transition = 'left 0.22s ease, top 0.22s ease';
+  }
+
+  btns.style.position = 'relative';
+  btns.style.minHeight = '50px';
+
+  btnNo.addEventListener('mouseover', flee);
+  btnNo.addEventListener('touchstart', function(e){ e.preventDefault(); flee(); });
+
+  btnYes.addEventListener('click', function(){
+    btns.style.transition = 'opacity 0.35s';
+    btns.style.opacity = '0';
+    setTimeout(function(){
+      btns.style.display = 'none';
+      successMsg.style.display = 'flex';
+      burst();
+    }, 380);
+  });
+
+  function burst(){
+    const emojis = ['❤️','💖','💗','💕','🌸','✨','💓'];
+    const box = root.getBoundingClientRect();
+    const cx = box.width/2, cy = box.height/2;
+    for(let i=0;i<20;i++){
+      const el = document.createElement('span');
+      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      const angle = Math.random()*Math.PI*2;
+      const dist = 80+Math.random()*140;
+      const dx = Math.cos(angle)*dist, dy = Math.sin(angle)*dist;
+      const size = 1+Math.random()*1.4;
+      el.style.cssText = `
+        position:absolute;
+        left:${cx}px;top:${cy}px;
+        font-size:${size}rem;
+        pointer-events:none;
+        z-index:999;
+        transform:translate(-50%,-50%);
+        transition:left 0.9s ease,top 0.9s ease,opacity 0.9s ease;
+      `;
+      root.appendChild(el);
+      requestAnimationFrame(()=>{
+        requestAnimationFrame(()=>{
+          el.style.left=(cx+dx)+'px';
+          el.style.top=(cy+dy)+'px';
+          el.style.opacity='0';
+        });
+      });
+      setTimeout(()=>el.remove(), 1000+i*40);
+    }
+  }
+})();
+</script>
