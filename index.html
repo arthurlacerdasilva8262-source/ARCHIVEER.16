@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Uma pergunta especial 💌</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Canvas para os corações animados -->
+  <canvas id="heartCanvas"></canvas>
+
+  <!-- Card principal -->
+  <main class="card-wrapper">
+    <div class="card" id="card">
+
+      <!-- Ícone decorativo -->
+      <div class="icon-top">💌</div>
+
+      <!-- Título com o nome dela -->
+      <h1 class="title">Oi, <span class="name">Gabby</span> <span class="heart-title">❤️</span></h1>
+
+      <!-- Frase interna do casal -->
+      <p class="frase-casal">"Eu te amo daqui até o infinito 🌌"</p>
+
+      <!-- Texto introdutório -->
+      <p class="intro">
+        Às vezes a gente encontra alguém que faz o mundo parecer mais leve,
+        mais colorido — e eu encontrei isso em você. Não consigo mais imaginar
+        meus dias sem a sua risada, sem a sua presença. Por isso, preciso te
+        fazer uma pergunta especial...
+      </p>
+
+      <!-- Divisor -->
+      <div class="divider">
+        <span>✦</span><span>✦</span><span>✦</span>
+      </div>
+
+      <!-- Lista de motivos -->
+      <section class="motivos">
+        <h2 class="motivos-titulo">Por que você deveria namorar comigo?</h2>
+        <ul class="motivos-lista">
+          <li>
+            <span class="emoji-item">🌙</span>
+            <span>Porque eu penso em você na primeira coisa do dia e na última da noite.</span>
+          </li>
+          <li>
+            <span class="emoji-item">🎵</span>
+            <span>Porque toda música boa me faz lembrar de você.</span>
+          </li>
+          <li>
+            <span class="emoji-item">🌸</span>
+            <span>Porque com você as coisas simples viram as melhores memórias.</span>
+          </li>
+          <li>
+            <span class="emoji-item">☕</span>
+            <span>Porque quero dividir cada café, cada silêncio e cada aventura com você.</span>
+          </li>
+          <li>
+            <span class="emoji-item">💫</span>
+            <span>Porque você me faz querer ser uma versão melhor de mim mesmo.</span>
+          </li>
+          <li>
+            <span class="emoji-item">🤝</span>
+            <span>Porque prometo estar aqui nos dias fáceis e especialmente nos difíceis.</span>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Pergunta principal -->
+      <div class="pergunta">
+        <p class="pergunta-texto">Então… quer namorar comigo? 🥺</p>
+
+        <!-- Botões -->
+        <div class="botoes">
+          <button class="btn-sim" id="btnSim" onclick="mostrarSim()">Sim 💖</button>
+          <button class="btn-nao" id="btnNao">Não 😢</button>
+        </div>
+      </div>
+
+      <!-- Mensagem de sucesso (oculta inicialmente) -->
+      <div class="mensagem-sim" id="mensagemSim">
+        <div class="mensagem-conteudo">
+          <span class="mensagem-emoji">🎉</span>
+          <h2>Eu sabia! ❤️</h2>
+          <p>
+            Você acabou de fazer o meu coração transbordar de felicidade.
+            Prometo te fazer sorrir todos os dias e cuidar de você com muito
+            carinho. Essa é a resposta mais linda que já ouvi. Te amo! 💕
+          </p>
+          <span class="confetti-text">✨ Começa aqui a nossa história ✨</span>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
